@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.4'
+    }
+}
+
+plugins {
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '5.1.0'
+}
+
+apply plugin: 'gradle-one-jar'
+
+group 'sabrina'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+
+    compile 'org.apache.poi:poi:3.8'
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'com.sabrina.Main'
+    }
+}
+
+task createRunnableJar(type: OneJar) {
+    mainClass = 'com.sabrina.Main'
+}
+
+
+
