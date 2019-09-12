@@ -7,6 +7,8 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -77,13 +79,16 @@ public class Main {
 
     public void writeToFile(File dir, String key, List<DataRow> listToFile){
 
-        File fOut = new File(dir, key+".csv");
+        File fOut = new File(dir, key.toUpperCase()+"_"+this.dateFrom+".csv");
         try {
             FileWriter writer = new FileWriter(fOut, false);
             BufferedWriter bufferedWriter = new BufferedWriter(writer);
 
+            bufferedWriter.write("selection_list_symbol;eff_date;valid_to;dj_id;rank");
+            bufferedWriter.newLine();
+
             for (DataRow r:listToFile){
-                bufferedWriter.write(r.type);
+                bufferedWriter.write(r.type.toUpperCase());
                 bufferedWriter.write(";");
                 bufferedWriter.write(this.dateFrom);
                 bufferedWriter.write(";");
@@ -91,7 +96,8 @@ public class Main {
                 bufferedWriter.write(";");
                 bufferedWriter.write(r.symbol);
                 bufferedWriter.write(";");
-                bufferedWriter.write(r.mcap);
+                bufferedWriter.write(r.mcap.replaceAll("\\.0",""));
+
                 bufferedWriter.newLine();
             }
 
